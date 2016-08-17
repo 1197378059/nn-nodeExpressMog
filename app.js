@@ -5,9 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var news = require('./routes/news');
-
 var app = express();
 
 // view engine setup
@@ -22,9 +19,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/news', news);
-// routes(app);
+//循环注册路由
+var fs = require('fs');
+var files = fs.readdirSync('./routes');
+files.forEach(function(file) {
+    var name = file.split('.')[0];
+    var el = '/' + name;
+    if (name == 'index') {
+        el = '/';
+    }
+    app.use(el, require('./routes/' + name));
+});
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

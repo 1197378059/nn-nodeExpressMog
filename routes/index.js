@@ -38,49 +38,6 @@ router.get('/list',function(req,res){
 	res.render('list',{title:'alluser'});
 });
 
-/*news*/
-router.get('/news/addNews',function(req,res){
-	res.render('addNews',{title:"AddNews"});
-});
-/*news*/
-router.get('/news/newsList',function(req,res){
-	var newsObj = {};
-	var us = new newsService();
-	var result = us.find(newsObj,function(err,doc){
-		if(doc){
-			res.render('newsList',{newslist:doc,title:"NewsList"});
-		}else{
-			res.json(err);
-		}
-	});
-});
-
-/*添加新闻*/ 
-router.post('/news/addNews', function(req, res) {
-	var us = new newsService();
-	var newsObj = {
-		title:req.body.title,
-		content:req.body.content,
-		createTime:new Date().toLocaleString(),
-		updateTime:new Date().toLocaleString(),
-		publicTime:new Date().toLocaleString()
-	};
-	us.save(newsObj,function(err,doc){
-		if(err!=null){
-			res.json(err);
-			return;
-		}
-		console.log(doc);
-		if(doc){
-			console.log(newsObj.title + ": save success in " + new Date());
-			res.redirect('/news/newsList');
-		}else{
-			console.log(newsObj.title+ ": save failed in " + new Date());
-			res.render('/',{title:"index"});
-		}
-	});
-});
-
 /*hompage*/
 router.post('/homepage', function(req, res) {
 	var us = new userService();

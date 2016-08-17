@@ -7,6 +7,7 @@ module.exports = function (){
 	//获取数据
 	this.find = function(userid,callback){
 		mongodb.find(this.config.table_name,{},userid,function(err,data){
+			
 			return callback(null,data);
 		});
 	},
