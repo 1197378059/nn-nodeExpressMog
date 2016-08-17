@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Hello NewList</h1>
+    <p>Welcome to <%= title %></p>
+    <ul>
+    	<%newslist.forEach(function(news){%>
+    	<li><%=news.title%></li>
+    	<%})%>
+    </ul>
+    <p><a href="/">返回首页</a></p>
+  </body>
+</html>
